@@ -1,0 +1,11 @@
+services:
+  cassandra-seed:
+    image: cassandra:4.1
+    ports:
+      - "9042:9042"
+
+# To access cassandra container:
+# docker-compose exec cassandra-seed cqlsh
+# to get your cassandra datacenter: SELECT data_center FROM system.local;
+# to create a keyspace: CREATE KEYSPACE IF NOT EXISTS car_rental WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
+# to get your keyspaces: DESCRIBE keyspaces;
