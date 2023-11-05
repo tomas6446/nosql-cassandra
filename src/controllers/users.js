@@ -5,8 +5,13 @@ export const addUser = (req, res) => {
   const { name, email } = req.body;
   const user_id = uuidv4();
   const query =
-    "INSERT INTO car_rental.users (user_id, name, email) VALUES (?, ?, ?);";
-  executeCqlQuery(query, [user_id, name, email], res, "Failed to add user.");
+    "INSERT INTO car_rental.users (user_id, name, email) VALUES (?, ?, ?) IF NOT EXISTS;";
+  executeCqlQuery(
+    query,
+    [user_id, name, email],
+    res,
+    "Failed to add user or user with that email already exists."
+  );
 };
 
 export const getUsers = (req, res) => {
