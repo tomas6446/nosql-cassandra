@@ -1,11 +1,36 @@
 services:
-  cassandra-seed:
-    image: cassandra:4.1
+  cassandra:
+    image: cassandra:latest
+    container_name: cassandra
     ports:
       - "9042:9042"
+    environment:
+      - "MAX_HEAP_SIZE=256M"
+      - "HEAP_NEWSIZE=128M"
+    restart: always
+    volumes:
+      - ./out/cassandra_data:/var/lib/cassandra
 
-# To access cassandra container:
-# docker-compose exec cassandra-seed cqlsh
-# to get your cassandra datacenter: SELECT data_center FROM system.local;
-# to create a keyspace: CREATE KEYSPACE IF NOT EXISTS car_rental WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 1};
-# to get your keyspaces: DESCRIBE keyspaces;
+  cassandra-load-keyspace:
+    container_name: cassandra-load-keyspace
+    image: cassandra:latest
+    depends_on:
+      - cassandra
+    volumes:
+      - ./init.cql:/init.cql
+    command: /bin/bash -c "sleep 60 && echo 'Loading Cassandra keyspace...' && cqlsh cassandra -f /init.cql"
+
+# Instructions for using this setup:
+# To access the Cassandra container's shell, use the following command:
+# docker-compose exec cassandra sh
+# 
+# Inside the Cassandra container's shell, you can interact with Cassandra using cqlsh.
+# To launch cqlsh, simply type:
+# cqlsh cassandra 9042
+#
+# Once inside cqlsh, you can perform various operations:
+# To get the datacenter name of your Cassandra instance, execute:
+# SELECT data_center FROM system.local;
+#
+# To list all keyspaces, you can use the command:
+# DESCRIBE keyspaces;
