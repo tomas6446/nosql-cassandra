@@ -1,0 +1,43 @@
+@startuml car_rental-erd
+
+skinparam linetype polyline
+
+entity "users" as u {
+    user_id : uuid <<K>>
+    name : text
+    email : text
+}
+
+entity "rents" as r {
+    rent_id : uuid <<K>>
+    user_id : uuid
+    car_id : uuid
+    start_date : timestamp
+    end_date : timestamp
+}
+
+entity "cars" as c {
+    car_id : uuid <<K>>
+    make : text
+    model : text
+    year : int
+}
+
+entity "user_rents" as ur {
+    user_id : uuid <<K>>
+    rent_id : uuid <<C Desc>>
+    created_at : timestamp
+}
+
+entity "user_cars" as uc {
+    user_id : uuid <<K>>
+    car_id : uuid <<C Desc>>
+}
+
+u ||--o{ ur : has >
+ur }o--|| r : is >
+c ||--o{ r : is rented in >
+u ||--o{ uc : owns >
+uc }o--|| c : is owned by >
+
+@enduml
