@@ -1,6 +1,8 @@
 # nosql-cassandradb
 
-Cassandradb nodejs example
+nodejs example Cassandradb
+
+![diagram](https://github.com/tomas6446/nosql-cassandradb/assets/77100735/3b406219-e049-4798-8e08-b435e29c7ebe)
 
 ```bash
     # Clone repository
