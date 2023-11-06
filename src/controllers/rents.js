@@ -13,8 +13,8 @@ export const addRent = (req, res) => {
   const query = `
         BEGIN BATCH
             INSERT INTO car_rental.rents (rent_id, user_id, car_id, start_date, end_date) VALUES (?, ?, ?, ?, ?);
-            INSERT INTO car_rental.user_rents (user_id, rent_id, car_id, created_at) VALUES (?, ?, ?, ?);
-            INSERT INTO car_rental.user_cars (user_id, car_id) VALUES (?, ?);
+            INSERT INTO car_rental.user_rents (user_id, rent_id, created_at) VALUES (?, ?, ?);
+            INSERT INTO car_rental.user_cars (user_id, rent_id, car_id) VALUES (?, ?, ?);
         APPLY BATCH;
     `;
   executeCqlQuery(
@@ -27,9 +27,9 @@ export const addRent = (req, res) => {
       end_date,
       user_id,
       rent_id,
-      car_id,
       created_at,
       user_id,
+      rent_id,
       car_id,
     ],
     res,
@@ -39,17 +39,17 @@ export const addRent = (req, res) => {
 
 export const deleteRent = (req, res) => {
   const rent_id = req.params.rent_id;
-  const { user_id, car_id } = req.body;
+  const user_id = req.params.user_id;
   const query = `
         BEGIN BATCH
             DELETE FROM car_rental.rents WHERE rent_id = ?;
             DELETE FROM car_rental.user_rents WHERE user_id = ? AND rent_id = ?;
-            DELETE FROM car_rental.user_cars WHERE user_id = ? AND car_id = ?;
+            DELETE FROM car_rental.user_cars WHERE user_id = ? AND rent_id = ?;
         APPLY BATCH;
     `;
   executeCqlQuery(
-    select_query,
-    [rent_id, user_id, rent_id, user_id, car_id],
+    query,
+    [rent_id, user_id, rent_id, user_id, rent_id],
     res,
     "Failed to retrieve rent details."
   );

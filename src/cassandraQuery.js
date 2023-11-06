@@ -6,11 +6,21 @@ export const executeCqlQuery = (query, params, res, errorMessage) => {
     .then((result) => res.json(result.rows))
     .catch((error) => {
       console.error("Cassandra Query Execution Error:", error);
-      res
-        .status(500)
-        .json({
-          error:
-            errorMessage || "An error occurred while processing your request.",
-        });
+      res.status(500).json({
+        error:
+          errorMessage || "An error occurred while processing your request.",
+      });
     });
+};
+
+export const asyncExecuteCqlQuery = async (query, params) => {
+  try {
+    const result = await cassandraClient.execute(query, params, {
+      prepare: true,
+    });
+    return result;
+  } catch (error) {
+    console.error("Cassandra Query Execution Error:", error);
+    throw error;
+  }
 };

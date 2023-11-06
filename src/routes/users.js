@@ -15,6 +15,6 @@ router.get("/", getUsers);
 router.get("/:user_id", getUser);
 router.delete("/:user_id", deleteUser);
 router.get("/:user_id/rents/:rent_id", getUserRents);
-router.get("/:user_id/cars/:car_id", getUserCars);
+router.get("/:user_id/cars/:rent_id", getUserCars);
 
 export default router;
