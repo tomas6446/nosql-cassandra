@@ -7,14 +7,13 @@ export const getRents = (req, res) => {
 };
 
 export const addRent = (req, res) => {
-  const { user_id, car_id, start_date, end_date } = req.body;
+  const { user_id, car_id, amount, car_number, rent_type, car_type, start_date, end_date } = req.body;
   const rent_id = uuidv4();
-  const created_at = Date.now();
   const query = `
         BEGIN BATCH
             INSERT INTO car_rental.rents (rent_id, user_id, car_id, start_date, end_date) VALUES (?, ?, ?, ?, ?);
-            INSERT INTO car_rental.user_rents (user_id, rent_id, created_at) VALUES (?, ?, ?);
-            INSERT INTO car_rental.user_cars (user_id, rent_id, car_id) VALUES (?, ?, ?);
+            INSERT INTO car_rental.user_rents (user_id, rent_id, amount, rent_type) VALUES (?, ?, ?, ?);
+            INSERT INTO car_rental.user_cars (user_id, rent_id, car_id, car_number, car_type) VALUES (?, ?, ?, ?, ?);
         APPLY BATCH;
     `;
   executeCqlQuery(
@@ -27,10 +26,13 @@ export const addRent = (req, res) => {
       end_date,
       user_id,
       rent_id,
-      created_at,
+      amount,
+      rent_type,
       user_id,
       rent_id,
       car_id,
+      car_number,
+      car_type
     ],
     res,
     "Failed to create rent record."

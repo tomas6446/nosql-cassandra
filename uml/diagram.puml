@@ -31,13 +31,16 @@ entity "cars" as c {
 entity "user_rents" as ur {
     user_id : uuid <<K>>
     rent_id : uuid <<C Desc>>
-    created_at : timestamp
+    amount : double,
+    rent_type : text
 }
 
 entity "user_cars" as uc {
     user_id : uuid <<K>>
     rent_id : uuid <<C Desc>>
-    car_id : uuid
+    car_id : uuid,
+    car_number : text,
+    car_type : text
 }
 
 u ||--o{ ur : has >

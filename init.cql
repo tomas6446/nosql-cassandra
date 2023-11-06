@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS car_rental.users
     name TEXT,
     email TEXT,
     PRIMARY KEY (user_id)
-);
+); 
 
 CREATE TABLE IF NOT EXISTS car_rental.user_emails (
     email TEXT,
@@ -41,7 +41,8 @@ CREATE TABLE IF NOT EXISTS car_rental.user_rents
 (
     rent_id UUID,
     user_id UUID,
-    created_at TIMESTAMP,
+    amount DECIMAL,
+    rent_type TEXT,
     PRIMARY KEY ((user_id), rent_id)
 ) WITH CLUSTERING ORDER BY (rent_id DESC);
 
@@ -50,6 +51,8 @@ CREATE TABLE IF NOT EXISTS car_rental.user_cars
     user_id UUID,
     car_id UUID,
     rent_id UUID,
+    car_number TEXT,
+    car_type TEXT,
     PRIMARY KEY ((user_id), rent_id)
 ) WITH CLUSTERING ORDER BY (rent_id DESC);
 

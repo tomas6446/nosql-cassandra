@@ -35,24 +35,24 @@ export const getUsers = (req, res) => {
 };
 
 export const getUserCars = (req, res) => {
-  const user_id = req.params.user_id;
-  const rent_id = req.params.rent_id;
-  const query = "SELECT * FROM user_cars WHERE user_id = ? AND rent_id = ?";
+  const car_number = req.body.car_number;
+  const car_type = req.body.car_type;
+  const query = "SELECT * FROM user_cars WHERE car_number = ? AND car_type = ?";
   executeCqlQuery(
     query,
-    [user_id, rent_id],
+    [car_number, car_type],
     res,
     "Failed to retrieve user cars."
   );
 };
 
 export const getUserRents = (req, res) => {
-  const user_id = req.params.user_id;
-  const rent_id = req.params.rent_id;
-  const query = "SELECT * FROM user_rents WHERE user_id = ? AND rent_id = ?";
+  const amount = req.body.amount;
+  const rent_type = req.body.rent_type;
+  const query = "SELECT * FROM user_rents WHERE amount = ? AND rent_type = ?";
   executeCqlQuery(
     query,
-    [user_id, rent_id],
+    [amount, rent_type],
     res,
     "Failed to retrieve user rents."
   );
