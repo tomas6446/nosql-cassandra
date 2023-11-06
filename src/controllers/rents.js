@@ -38,7 +38,8 @@ export const addRent = (req, res) => {
 };
 
 export const deleteRent = (req, res) => {
-  const { user_id, car_id, rent_id } = req.body;
+  const rent_id = req.params.rent_id;
+  const { user_id, car_id } = req.body;
   const query = `
         BEGIN BATCH
             DELETE FROM car_rental.rents WHERE rent_id = ?;

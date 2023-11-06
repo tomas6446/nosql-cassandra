@@ -44,7 +44,7 @@ CREATE TABLE IF NOT EXISTS car_rental.user_cars
     user_id UUID,
     car_id UUID,
     PRIMARY KEY ((user_id), car_id)
-) WITH CLUSTERING ORDER BY (car_id DESC, rent_id DESC);
+) WITH CLUSTERING ORDER BY (car_id DESC);
 
 INSERT INTO car_rental.cars (car_id, make, model, year) VALUES (uuid(), 'Toyota', 'Corolla', 2020);
 INSERT INTO car_rental.cars (car_id, make, model, year) VALUES (uuid(), 'Ford', 'Mustang', 2021);
