@@ -8,6 +8,11 @@ entity "users" as u {
     email : text
 }
 
+entity "user_emails" as ue {
+    email : text <<K>>
+    user_id : uuid
+}
+
 entity "rents" as r {
     rent_id : uuid <<K>>
     user_id : uuid
@@ -31,13 +36,16 @@ entity "user_rents" as ur {
 
 entity "user_cars" as uc {
     user_id : uuid <<K>>
-    car_id : uuid <<C Desc>>
+    rent_id : uuid <<C Desc>>
+    car_id : uuid
 }
 
 u ||--o{ ur : has >
 ur }o--|| r : is >
 c ||--o{ r : is rented in >
-u ||--o{ uc : owns >
+u ||--o{ uc : has >
 uc }o--|| c : is owned by >
+u ||--|| ue : email linked to >
+ue ||--o{ uc : has cars >
 
 @enduml
