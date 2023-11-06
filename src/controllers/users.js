@@ -5,7 +5,7 @@ export const addUser = (req, res) => {
   const { name, email } = req.body;
   const user_id = uuidv4();
   const query =
-    "INSERT INTO car_rental.users (user_id, name, email) VALUES (?, ?, ?) IF NOT EXISTS;";
+    "INSERT INTO car_rental.users (user_id, name, email) VALUES (?, ?, ?) IF NOT EXISTS";
   executeCqlQuery(
     query,
     [user_id, name, email],
