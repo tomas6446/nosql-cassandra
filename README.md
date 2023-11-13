@@ -14,6 +14,10 @@ cd nosql-cassandradb
 # Run Postgres container
 sudo docker-compose up -d
 
+# Copy and run the script inside container
+sudo docker cp init.cql nosql-cassandra:/init.cql
+sudo docker exec -i nosql-cassandra cqlsh -f /init.cql
+
 # Run project
 node index.js
 ```
