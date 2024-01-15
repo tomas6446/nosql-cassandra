@@ -11,7 +11,7 @@ git clone https://github.com/tomas6446/nosql-cassandradb
 # Enter the directory
 cd nosql-cassandradb
 
-# Run Postgres container
+# Run the container
 sudo docker-compose up -d
 
 # Copy and run the script inside container
